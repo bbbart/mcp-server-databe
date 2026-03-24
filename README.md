@@ -24,25 +24,17 @@ An [MCP](https://modelcontextprotocol.io/) server for the [data.be](https://data
 
 Request one at [data.be/en/api](https://data.be/en/api).
 
-### 2. Store your API key
+### 2. Configure your MCP client
 
-Either create `~/.config/databe/api-key` containing just the key:
-
-```sh
-mkdir -p ~/.config/databe
-echo -n "your-api-key" > ~/.config/databe/api-key
-chmod 600 ~/.config/databe/api-key
-```
-
-Or set the `DATABE_API_KEY` environment variable.
-
-### 3. Configure your MCP client
+The API key is passed via the `DATABE_API_KEY` environment variable in the MCP
+server configuration.
 
 #### Claude Code
 
 ```sh
-claude mcp add databe -- \
-  uvx --from "git+https://github.com/bbbart/mcp-server-databe.git" mcp-server-databe
+claude mcp add databe \
+  -e DATABE_API_KEY=your-api-key \
+  -- uvx --from "git+https://github.com/bbbart/mcp-server-databe.git" mcp-server-databe
 ```
 
 #### Claude Desktop (`claude_desktop_config.json`)
@@ -56,7 +48,10 @@ claude mcp add databe -- \
         "--from",
         "git+https://github.com/bbbart/mcp-server-databe.git",
         "mcp-server-databe"
-      ]
+      ],
+      "env": {
+        "DATABE_API_KEY": "your-api-key"
+      }
     }
   }
 }
