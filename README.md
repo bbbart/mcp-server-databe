@@ -35,7 +35,8 @@ export DATABE_API_KEY="your-api-key"
 #### Claude Code
 
 ```sh
-claude mcp add databe -- env DATABE_API_KEY=your-key-here uvx mcp-server-databe
+claude mcp add databe -- env DATABE_API_KEY=your-key-here \
+  uvx --from "git+https://github.com/bbbart/mcp-server-databe.git" mcp-server-databe
 ```
 
 #### Claude Desktop (`claude_desktop_config.json`)
@@ -45,7 +46,11 @@ claude mcp add databe -- env DATABE_API_KEY=your-key-here uvx mcp-server-databe
   "mcpServers": {
     "databe": {
       "command": "uvx",
-      "args": ["mcp-server-databe"],
+      "args": [
+        "--from",
+        "git+https://github.com/bbbart/mcp-server-databe.git",
+        "mcp-server-databe"
+      ],
       "env": {
         "DATABE_API_KEY": "your-api-key"
       }
