@@ -1,10 +1,12 @@
 import json
 import os
+from pathlib import Path
 
 import httpx
 from mcp.server.fastmcp import FastMCP
 
 BASE_URL = "https://api.data.be/2.0"
+_API_KEY_FILE = Path.home() / ".config" / "databe" / "api-key"
 
 mcp = FastMCP(
     "data.be",
@@ -14,9 +16,12 @@ mcp = FastMCP(
 
 def _get_api_key() -> str:
     key = os.environ.get("DATABE_API_KEY")
+    if not key and _API_KEY_FILE.is_file():
+        key = _API_KEY_FILE.read_text().strip()
     if not key:
         raise ValueError(
-            "DATABE_API_KEY environment variable is not set. "
+            "DATABE_API_KEY environment variable is not set and "
+            f"{_API_KEY_FILE} not found. "
             "Get your API key at https://data.be/en/api"
         )
     return key
